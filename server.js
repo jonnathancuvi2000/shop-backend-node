@@ -6,6 +6,9 @@ import seedRouter from "./routes/seedRoutes.js";
 import productRouter from "./routes/productRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import orderRouter from "./routes/orderRoutes.js";
+// const cors = require('cors')
+import cors from 'cors'
+
 
 dotenv.config(); // whit this we call teh file .env an get de data from it
 
@@ -17,6 +20,7 @@ mongoose.connect(process.env.MONGODB_URI).then(()=>{
 
 const app = express();
 
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -35,6 +39,8 @@ app.use('/api/orders',orderRouter);
 app.use("/", (req,res) => {
   res.send('Bienvenido al server para Shop Store')
 });
+
+
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
